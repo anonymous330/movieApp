@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect,JsonResponse
 from imdb import IMDb
-from .models import Genres
+from .models import Genres,myMovie
 import requests
 # Create your views here.
 def index(request):
@@ -29,10 +29,29 @@ def search(request,id):
         movie['release']=movie.pop('original air date')
     except KeyError:
         movie['release']=movie.pop('series years')
+    try:
+        flag=myMovie.objects.get(movieId=id).flag
+    except :
+        flag=False
     context={
     'movies':movie,
     'genres':Genres.objects.all(),
+    'ID':id,
+    'flags':flag,
     }
     return render(request,'review/movie.html',context)
+
+def screen(request,id):
+    try:
+        Flag = myMovie.objects.get(movieId=id)
+        Flag.flag=not myMovie.objects.get(movieId=id).flag
+        print('flag',Flag.flag)
+        Flag.save()
+    except:
+        movie=myMovie(movieId=id,flag=True)
+        movie.save()
+    return redirect('search',id)
+
+
 def user(request):
     return render(request,'review/user.html')

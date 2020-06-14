@@ -6,3 +6,9 @@ class Genres(models.Model):
 
     def __str__(self):
         return self.genres
+class myMovie(models.Model):
+    movieId=models.IntegerField()
+    flag=models.BooleanField(False)
+
+    def __str__(self):
+        return str(self.movieId)

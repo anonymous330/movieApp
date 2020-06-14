@@ -13,6 +13,7 @@
 src="https://code.jquery.com/jquery-3.1.1.min.js"
 integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 crossorigin="anonymous"></script>
+
   <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
   <link rel="stylesheet" type='text/css' href="{% static 'css/bootstrap.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -36,7 +37,7 @@ crossorigin="anonymous"></script>
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">My Screen</a>
+          <a class="nav-link" href="#"></a>
         </li>
 
         <li class="nav-item dropdown">
@@ -89,14 +90,19 @@ crossorigin="anonymous"></script>
             <div class="row">
               <div class="well">
                 <h3>Plot</h3>
-                {{movies.plot|join:''}}
+              <p> {{movies.plot|join:''}}</p>
+
                 <hr>
                 <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-primary">View IMDB</a>
-                <a href="{% url 'index' %}" class="btn btn-default">Go Back To Search</a>
+                <a href="{% url 'index' %}" class="btn btn-primary">Go Back To Search</a>
+                {% if flags %}
+                <a href="{% url 'screen' ID %}" class="btn btn-success">Added / Remove </a>
+                {% else %}
+                <a href="{% url 'screen' ID %}" class="btn btn-secondary">Add To Watchlist</a>
+                {% endif %}
               </div>
             </div>
   </div>
-
 
 </body>
 </html>
